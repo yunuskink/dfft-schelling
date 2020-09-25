@@ -1,7 +1,7 @@
 #using SpecialFunctions
 #using Polynomials
 #using StatsBase
-using NaNMath
+# using NaNMath
 
 # function calculate_probability_mass(densities)
 #
@@ -11,7 +11,7 @@ function calculate_H_trinary_function(counts_joint)
     N_max = size(counts_joint,1)-1
     P = counts_joint./(sum(counts_joint))
     # H = [-log(P[N1+1,N2+1]*factorial(big(N1))*factorial(big(N2))/factorial(big(N_max))) for N1 = 0:N_max, N2 = 0:N_max]
-    H = [-log(P[N1+1,N2+1]) - loggamma(N1+1) - loggamma(N2+1) + loggamma(N_max+1) for N1 = 0:N_max, N2 = 0:N_max]
+    H = [-log(P[N1+1,N2+1]) - loggamma(N1+1) - loggamma(N2+1) - loggamma(N_max-N1-N2+1) + loggamma(N_max+1) for N1 = 0:N_max, N2 = 0:N_max]
     H = H./N_max
 
     replace!(H, Inf => NaN)
